@@ -11,6 +11,7 @@ public interface CurrencyApiClient {
     @GetMapping(value = "/historical/{date}.json")
     CurrencyDto readCurrencyFromDay(@PathVariable("date") String date,
                                     @RequestParam("app_id") String appID,
+                                    @RequestParam("base") String baseCurrency,
                                     @RequestParam("symbols") String symbols);
 }
 

@@ -4,20 +4,16 @@ import org.springframework.stereotype.Service;
 import static main.java.ru.semykin.util.ApplicationConstants.*;
 
 @Service
-public class GiphyApiService {
+public class GiphyService {
 
     private final FeignClientService feignClientService;
 
-    private final SettingsService settings;
-
-    public GiphyApiService(FeignClientService feignClientService, SettingsService settings) {
+    public GiphyService(FeignClientService feignClientService) {
         this.feignClientService = feignClientService;
-        this.settings = settings;
     }
 
     public String getGifUrl(boolean isIncreased) {
-        String url = feignClientService.getGiphyApiClient()
-                .getGif(settings.getGiphyApiKey(), isIncreased ? RICH_TAG : BROKE_TAG, RATING)
+        String url = feignClientService.getGiphyDto(isIncreased ? RICH_TAG : BROKE_TAG)
                 .getData()
                 .getEmbedUrl();
         return String.format("<iframe src='%s'></iframe>", url);

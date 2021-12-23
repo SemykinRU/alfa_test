@@ -2,7 +2,6 @@ package main.java.ru.semykin.service;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,9 @@ public class SettingsService {
 
     @Value("${currency.app_id}")
     private String currencyAppID;
+
+    @Value("${currency.base_currency}")
+    private String baseCurrency;
 
     @Value("${giphy.url}")
     private String giphyUrl;
