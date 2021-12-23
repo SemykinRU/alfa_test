@@ -1,35 +1,34 @@
 package main.java.ru.semykin.service;
 
-import com.google.gson.Gson;
-import main.java.ru.semykin.model.CurrencyModel;
+import main.java.ru.semykin.dto.CurrencyDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import static main.java.ru.semykin.util.ApplicationConstants.*;
 
 @Service
 public class CurrencyApiService {
-    private final CurrencyApiClient currencyApiClient;
 
-    private final String key = "RUB";
-    private final String today = LocalDate.now()
-            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    private final int minusDay = 1;
-    private final String yesterday = LocalDate.now()
-            .minusDays(minusDay)
-            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    private final String appID = "64c2e5b33da64ef9968d3fc497bee65b";
+    @Autowired
+    private final FeignClientService feignClientService;
 
-    public CurrencyApiService(CurrencyApiClient currencyApiClient) {
-        this.currencyApiClient = currencyApiClient;
+    @Autowired
+    private final SettingsService settings;
+
+    public CurrencyApiService(FeignClientService feignClientService, SettingsService settings) {
+        this.feignClientService = feignClientService;
+        this.settings = settings;
     }
 
-    public boolean isIncreased() {
-        Gson gson = new Gson();
-        CurrencyModel todayCurrency =
-                gson.fromJson(currencyApiClient.readToDayCurrency(today, appID, key), CurrencyModel.class);
-        CurrencyModel yesterdayCurrency =
-                gson.fromJson(currencyApiClient.readToDayCurrency(yesterday, appID, key), CurrencyModel.class);
-        return todayCurrency.getRates().get(key) > yesterdayCurrency.getRates().get(key);
+    public boolean isIncreased(String symbols) {
+        CurrencyDto todayCurrency = getCurrencyDto(TODAY, symbols);
+        CurrencyDto yesterdayCurrency = getCurrencyDto(YESTERDAY, symbols);
+        return todayCurrency.getRates().get(symbols) >= yesterdayCurrency.getRates().get(symbols);
+    }
+
+    public CurrencyDto getCurrencyDto(String date, String symbols) {
+        return feignClientService
+                .getCurrencyApiClient()
+                .readCurrencyFromDay(date, settings.getCurrencyAppID(), symbols);
     }
 }
