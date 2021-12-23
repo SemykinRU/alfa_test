@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Getter
 @Setter
-@ToString
 @Service
 public class SettingsService {
 

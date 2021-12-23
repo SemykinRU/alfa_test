@@ -9,10 +9,8 @@ import static main.java.ru.semykin.util.ApplicationConstants.*;
 @Service
 public class CurrencyApiService {
 
-    @Autowired
     private final FeignClientService feignClientService;
 
-    @Autowired
     private final SettingsService settings;
 
     public CurrencyApiService(FeignClientService feignClientService, SettingsService settings) {
