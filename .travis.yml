@@ -17,6 +17,14 @@ env:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
+
+before_install:
+      - wget https://services.gradle.org/distributions/gradle-7.3.3-bin.zip
+      - unzip -qq gradle-7.3.3-bin.zip
+      - export GRADLE_HOME=$PWD/gradle-7.3.3
+      - export PATH=$GRADLE_HOME/bin:$PATH
+      - gradle -v
+
 notifications:
   email:
     recipients:
