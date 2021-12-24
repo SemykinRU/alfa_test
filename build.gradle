@@ -48,4 +48,8 @@ task codeCoverageReport(type: JacocoReport) {
     }
 }
 
+codeCoverageReport.dependsOn {
+    test
+}
+
 
