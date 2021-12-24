@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'ru.semykin'
-version = '0.0.1-SNAPSHOT'
+version = '0.1.0'
 sourceCompatibility = '11'
 apply plugin: 'jacoco'
 
@@ -17,14 +17,14 @@ repositories {
 
 dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation group: 'org.springframework.boot', name: 'spring-boot', version: '2.6.1'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.6.1'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '2.6.1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot', version: '2.6.2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.6.2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '2.6.2'
     implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     implementation group: 'org.springframework', name: 'spring-context', version: '5.3.14'
     implementation 'org.springframework.cloud:spring-cloud-dependencies:Hoxton.RELEASE'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.0'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.6.1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.6.2'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
     implementation group: 'org.yaml', name: 'snakeyaml', version: '1.30'
