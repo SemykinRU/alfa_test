@@ -3,6 +3,9 @@ language: java
 jdk:
   - openjdk11
 
+gradle:
+  - 7.3.2
+
 sudo: false
 
 env:
