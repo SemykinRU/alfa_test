@@ -1,12 +1,10 @@
 package ru.semykin.alfa_test.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.ToString;
 
-@Getter
-@Setter
 @ToString
+@Data
 public class GiphyDto {
 
     private GiphyDataDto data;

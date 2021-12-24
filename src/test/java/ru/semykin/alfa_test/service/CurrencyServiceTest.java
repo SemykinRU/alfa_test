@@ -1,5 +1,6 @@
 package ru.semykin.alfa_test.service;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,13 +19,13 @@ class CurrencyServiceTest {
 
     @MockBean
     CurrencyService currencyService;
+
     @MockBean
     FeignClientService feignClientService;
-
-    private final CurrencyDto todayCurrencyDto = new CurrencyDto();
-    private final CurrencyDto yesterdayCurrencyDto = new CurrencyDto();
-    private final Map<String, Double> todayRates = new HashMap<>();
-    private final Map<String, Double> yesterdayRates = new HashMap<>();
+    CurrencyDto todayCurrencyDto = new CurrencyDto();
+    CurrencyDto yesterdayCurrencyDto = new CurrencyDto();
+    Map<String, Double> todayRates = new HashMap<>();
+    Map<String, Double> yesterdayRates = new HashMap<>();
 
 
     @BeforeEach
@@ -35,6 +36,12 @@ class CurrencyServiceTest {
         yesterdayRates.put(TEST_UE, yesterdayValue);
         todayCurrencyDto.setRates(todayRates);
         yesterdayCurrencyDto.setRates(yesterdayRates);
+    }
+
+    @AfterEach
+    public void tierDown() {
+        todayCurrencyDto = yesterdayCurrencyDto = null;
+        todayRates = yesterdayRates = null;
     }
 
     @Test

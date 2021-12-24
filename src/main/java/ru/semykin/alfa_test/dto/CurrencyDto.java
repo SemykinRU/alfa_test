@@ -1,15 +1,13 @@
 package ru.semykin.alfa_test.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.ToString;
 
 import java.util.Map;
 
-@Getter
-@Setter
 @ToString
+@Data
 public class CurrencyDto {
 
     @JsonProperty("timestamp")
