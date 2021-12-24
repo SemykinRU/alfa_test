@@ -16,7 +16,7 @@ after_success:
 
 
 before_install:
-    - sdk install gradle 7.3.3
+    - $sdk install gradle 7.3.3
 
 notifications:
   email:
