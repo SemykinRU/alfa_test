@@ -1,4 +1,4 @@
-package main.java.ru.semykin;
+package ru.semykin.alfa_test;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

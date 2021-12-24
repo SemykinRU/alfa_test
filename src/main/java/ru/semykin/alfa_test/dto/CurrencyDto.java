@@ -1,4 +1,4 @@
-package main.java.ru.semykin.dto;
+package ru.semykin.alfa_test.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -20,4 +20,5 @@ public class CurrencyDto {
 
     @JsonProperty("rates")
     private Map<String, Double> rates;
+
 }

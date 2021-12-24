@@ -1,7 +1,8 @@
-package main.java.ru.semykin.service;
+package ru.semykin.alfa_test.service;
 
 import org.springframework.stereotype.Service;
-import static main.java.ru.semykin.util.ApplicationConstants.*;
+import static ru.semykin.alfa_test.util.ApplicationConstants.BROKE_TAG;
+import static ru.semykin.alfa_test.util.ApplicationConstants.RICH_TAG;
 
 @Service
 public class GiphyService {

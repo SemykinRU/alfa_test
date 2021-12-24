@@ -1,8 +1,8 @@
-package main.java.ru.semykin.controller;
+package ru.semykin.alfa_test.controller;
 
-import main.java.ru.semykin.service.GetUrlFromGiphyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.semykin.alfa_test.service.GetUrlFromGiphyService;
 
 @RestController
 @RequestMapping(value = "/")

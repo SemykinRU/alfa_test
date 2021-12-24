@@ -1,4 +1,4 @@
-package main.java.ru.semykin.dto;
+package ru.semykin.alfa_test.dto;
 
 import lombok.Getter;
 import lombok.Setter;

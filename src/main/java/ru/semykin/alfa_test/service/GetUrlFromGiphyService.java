@@ -1,4 +1,4 @@
-package main.java.ru.semykin.service;
+package ru.semykin.alfa_test.service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

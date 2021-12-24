@@ -1,4 +1,4 @@
-package main.java.ru.semykin.service;
+package ru.semykin.alfa_test.service;
 
 import lombok.Getter;
 import lombok.Setter;
