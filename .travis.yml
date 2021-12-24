@@ -9,11 +9,6 @@ jdk:
 
 sudo: false
 
-script:
-  - ./gradlew build --scan -s
-  - ./gradlew check
-  - ./gradlew codeCoverageReport
-
 env:
   global:
     - CODECOV_TOKEN=4678d1b8-676a-47d4-92f1-dd5b1f833326
