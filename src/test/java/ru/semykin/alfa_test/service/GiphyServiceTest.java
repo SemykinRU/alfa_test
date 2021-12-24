@@ -27,7 +27,7 @@ class GiphyServiceTest {
     SettingsService settings;
 
     @Autowired
-    GiphyService service;
+    GiphyService giphyService;
 
     GiphyDto richGiphy = new GiphyDto();
     GiphyDto brokeGiphy = new GiphyDto();
@@ -55,7 +55,7 @@ class GiphyServiceTest {
                         RICH_TAG,
                         RATING))
                 .thenReturn(richGiphy);
-        assertTrue(service.getGifUrl(true).contains("rich_url"));
+        assertTrue(giphyService.getGifUrl(true).contains("rich_url"));
     }
 
     @Test
@@ -64,7 +64,7 @@ class GiphyServiceTest {
                 .getGif(settings.getGiphyApiKey(),
                         BROKE_TAG,
                         RATING))
-                .thenReturn(richGiphy);
-        assertTrue(service.getGifUrl(true).contains("broke_url"));
+                .thenReturn(brokeGiphy);
+        assertTrue(giphyService.getGifUrl(false).contains("broke_url"));
     }
 }
