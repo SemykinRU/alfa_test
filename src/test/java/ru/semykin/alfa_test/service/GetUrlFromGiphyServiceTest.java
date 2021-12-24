@@ -46,8 +46,6 @@ class GetUrlFromGiphyServiceTest {
         giphyDto.setData(giphyDataDto);
         todayCurrencyDto = new CurrencyDto();
         yesterdayCurrencyDto = new CurrencyDto();
-        todayCurrencyDto.setRates(Map.of(TEST_UE, 73.456));
-        yesterdayCurrencyDto.setRates(Map.of(TEST_UE, 70.00));
     }
 
     @AfterEach
@@ -59,25 +57,65 @@ class GetUrlFromGiphyServiceTest {
 
     @Test
     void whenGetUrlFromGiphyServiceReturnRichUrlOnGifThen() {
-        when(currencyClient.readCurrencyFromDay(TODAY, settings.getCurrencyAppID(), settings.getBaseCurrency(), TEST_UE))
+
+        todayCurrencyDto.setRates(Map.of(TEST_UE, 73.456));
+
+        yesterdayCurrencyDto.setRates(Map.of(TEST_UE, 70.00));
+
+        when(currencyClient
+                .readCurrencyFromDay(TODAY,
+                        settings.getCurrencyAppID(),
+                        settings.getBaseCurrency(),
+                        TEST_UE))
                 .thenReturn(todayCurrencyDto);
-        when(currencyClient.readCurrencyFromDay(YESTERDAY, settings.getCurrencyAppID(), settings.getBaseCurrency(), TEST_UE))
+
+        when(currencyClient
+                .readCurrencyFromDay(YESTERDAY,
+                        settings.getCurrencyAppID(),
+                        settings.getBaseCurrency(),
+                        TEST_UE))
                 .thenReturn(yesterdayCurrencyDto);
-        when(giphyClient.getGif(settings.getGiphyApiKey(), RICH_TAG, RATING))
+
+        when(giphyClient
+                .getGif(settings.getGiphyApiKey(),
+                        RICH_TAG,
+                        RATING))
                 .thenReturn(giphyDto);
+
         var result = getUrlFromGiphyService.responseFromGiphy(TEST_UE);
+
         assertTrue(result.toString().contains(giphyDataDto.getEmbedUrl()));
     }
 
     @Test
     void whenGetUrlFromGiphyServiceReturnBrokeUrlOnGifThen() {
-        when(currencyClient.readCurrencyFromDay(TODAY, settings.getCurrencyAppID(), settings.getBaseCurrency(), TEST_UE))
-                .thenReturn(yesterdayCurrencyDto);
-        when(currencyClient.readCurrencyFromDay(YESTERDAY, settings.getCurrencyAppID(), settings.getBaseCurrency(), TEST_UE))
+
+        todayCurrencyDto.setRates(Map.of(TEST_UE, 73.456));
+
+        yesterdayCurrencyDto.setRates(Map.of(TEST_UE, 75.00));
+
+        when(currencyClient
+                .readCurrencyFromDay(TODAY,
+                        settings.getCurrencyAppID(),
+                        settings.getBaseCurrency(),
+                        TEST_UE))
                 .thenReturn(todayCurrencyDto);
-        when(giphyClient.getGif(settings.getGiphyApiKey(), BROKE_TAG, RATING))
+
+        when(currencyClient.
+                readCurrencyFromDay(YESTERDAY,
+                        settings.getCurrencyAppID(),
+                        settings.getBaseCurrency(),
+                        TEST_UE))
+                .thenReturn(yesterdayCurrencyDto);
+
+        when(giphyClient
+                .getGif(settings.getGiphyApiKey(),
+                        BROKE_TAG,
+                        RATING))
                 .thenReturn(giphyDto);
+
         var result = getUrlFromGiphyService.responseFromGiphy(TEST_UE);
+
         assertTrue(result.toString().contains(giphyDataDto.getEmbedUrl()));
     }
 }
