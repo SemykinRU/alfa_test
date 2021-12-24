@@ -15,7 +15,7 @@ public class CurrencyController {
     }
 
     @GetMapping(value = "{symbols}")
-    public ResponseEntity<String> checkCurses(@PathVariable String symbols) {
+    public ResponseEntity<String> getUrlFromGiphyByCurrencyRatesStatus(@PathVariable String symbols) {
         return getUrlFromGiphyService.responseFromGiphy(symbols);
     }
 }
