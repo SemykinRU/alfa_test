@@ -3,11 +3,12 @@ package ru.semykin.alfa_test.service;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import ru.semykin.alfa_test.client.CurrencyClient;
 import ru.semykin.alfa_test.dto.CurrencyDto;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,51 +19,76 @@ import static ru.semykin.alfa_test.util.ApplicationConstants.*;
 class CurrencyServiceTest {
 
     @MockBean
+    CurrencyClient currencyClient;
+
+    @Autowired
     CurrencyService currencyService;
 
-    @MockBean
+    @Autowired
     FeignClientService feignClientService;
-    CurrencyDto todayCurrencyDto = new CurrencyDto();
-    CurrencyDto yesterdayCurrencyDto = new CurrencyDto();
-    Map<String, Double> todayRates = new HashMap<>();
-    Map<String, Double> yesterdayRates = new HashMap<>();
 
+    @Autowired
+    SettingsService settings;
+
+    CurrencyDto todayCurrencyDto;
+    CurrencyDto yesterdayCurrencyDto;
 
     @BeforeEach
     public void setUp() {
-        Double todayValue = 73.456;
-        Double yesterdayValue = 73.00;
-        todayRates.put(TEST_UE, todayValue);
-        yesterdayRates.put(TEST_UE, yesterdayValue);
-        todayCurrencyDto.setRates(todayRates);
-        yesterdayCurrencyDto.setRates(yesterdayRates);
+        todayCurrencyDto = new CurrencyDto();
+        yesterdayCurrencyDto = new CurrencyDto();
     }
 
     @AfterEach
     public void tierDown() {
         todayCurrencyDto = yesterdayCurrencyDto = null;
-        todayRates = yesterdayRates = null;
     }
 
     @Test
     void whenToDayCurrencyRateHigherYesterdayRateThenTrue() {
-        when(feignClientService.getCurrencyDto(TODAY, TEST_UE))
+
+        todayCurrencyDto.setRates(Map.of(TEST_UE, 75.00));
+
+        yesterdayCurrencyDto.setRates(Map.of(TEST_UE, 70.00));
+
+        when(currencyClient
+                .readCurrencyFromDay(TODAY,
+                        settings.getCurrencyAppID(),
+                        settings.getBaseCurrency(),
+                        TEST_UE))
                 .thenReturn(todayCurrencyDto);
-        when(feignClientService.getCurrencyDto(YESTERDAY, TEST_UE))
-                .thenReturn(todayCurrencyDto);
-        when(currencyService.isIncreased(TEST_UE))
-                .thenReturn(todayRates.get(TEST_UE) > yesterdayRates.get(TEST_UE));
+
+        when(currencyClient
+                .readCurrencyFromDay(YESTERDAY,
+                        settings.getCurrencyAppID(),
+                        settings.getBaseCurrency(),
+                        TEST_UE ))
+                .thenReturn(yesterdayCurrencyDto);
+
         assertTrue(currencyService.isIncreased(TEST_UE));
     }
 
     @Test
     void whenToDayCurrencyRateLowerYesterdayRateThenFalse() {
-        when(feignClientService.getCurrencyDto(TODAY, TEST_UE))
+
+        todayCurrencyDto.setRates(Map.of(TEST_UE, 70.00));
+
+        yesterdayCurrencyDto.setRates(Map.of(TEST_UE, 75.00));
+
+        when(currencyClient
+                .readCurrencyFromDay(TODAY,
+                        settings.getCurrencyAppID(),
+                        settings.getBaseCurrency(),
+                        TEST_UE))
                 .thenReturn(todayCurrencyDto);
-        when(feignClientService.getCurrencyDto(YESTERDAY, TEST_UE))
-                .thenReturn(todayCurrencyDto);
-        when(currencyService.isIncreased(TEST_UE))
-                .thenReturn(todayRates.get(TEST_UE) < yesterdayRates.get(TEST_UE));
+
+        when(currencyClient
+                .readCurrencyFromDay(YESTERDAY,
+                        settings.getCurrencyAppID(),
+                        settings.getBaseCurrency(),
+                        TEST_UE ))
+                .thenReturn(yesterdayCurrencyDto);
+
         assertFalse(currencyService.isIncreased(TEST_UE));
     }
 }
