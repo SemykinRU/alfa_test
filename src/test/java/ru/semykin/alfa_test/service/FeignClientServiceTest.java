@@ -11,7 +11,7 @@ import ru.semykin.alfa_test.dto.GiphyDto;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 import static ru.semykin.alfa_test.util.ApplicationConstants.*;
 
@@ -19,16 +19,16 @@ import static ru.semykin.alfa_test.util.ApplicationConstants.*;
 class FeignClientServiceTest {
 
     @MockBean
-    CurrencyClient currencyClient;
+    private CurrencyClient currencyClient;
 
     @MockBean
-    GiphyClient giphyClient;
+    private GiphyClient giphyClient;
 
     @Autowired
-    SettingsService settings;
+    private SettingsService settings;
 
     @Autowired
-    FeignClientService feignClientService;
+    private FeignClientService feignClientService;
 
 
     @Test
@@ -43,14 +43,14 @@ class FeignClientServiceTest {
     }
 
     @Test
-    void whenNoReturnNewCurrencyDtoThenNull() {
+    void whenNoReturnNewCurrencyDtoThenIllegalArgumentException() {
         when(currencyClient
                 .readCurrencyFromDay(TODAY,
                         settings.getCurrencyAppID(),
                         settings.getBaseCurrency(),
                         TEST_UE))
                 .thenReturn(null);
-        assertNull(feignClientService.getCurrencyDto(TODAY, TEST_UE));
+        assertThrows(IllegalArgumentException.class, () -> feignClientService.getCurrencyDto(TODAY, TEST_UE));
     }
 
     @Test
@@ -64,12 +64,12 @@ class FeignClientServiceTest {
     }
 
     @Test
-    void whenNoReturnNewGiphyDtoThenNull() {
+    void whenNoReturnNewGiphyDtoThenIllegalArgumentException() {
         when(giphyClient
                 .getGif(settings.getGiphyApiKey(),
                         RICH_TAG,
                         RATING))
                 .thenReturn(null);
-        assertNull(feignClientService.getGiphyDto(RICH_TAG));
+        assertThrows(IllegalArgumentException.class, () -> feignClientService.getGiphyDto(RICH_TAG));
     }
 }

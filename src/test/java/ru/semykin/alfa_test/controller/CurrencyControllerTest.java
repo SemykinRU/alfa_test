@@ -19,10 +19,10 @@ import static ru.semykin.alfa_test.util.ApplicationConstants.TEST_UE;
 class CurrencyControllerTest {
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @MockBean
-    GetUrlFromGiphyService getUrlFromGiphyService;
+    private GetUrlFromGiphyService getUrlFromGiphyService;
 
     @Test
     void whenWasCorrectSymbolThenHttpStatus200() throws Exception {
@@ -32,7 +32,7 @@ class CurrencyControllerTest {
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/" + TEST_UE)
+                        .get("/currency/" + TEST_UE)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
@@ -45,7 +45,7 @@ class CurrencyControllerTest {
                 .thenReturn(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/" + TEST_UE)
+                        .get("/currency/" + TEST_UE)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is5xxServerError());
     }
@@ -58,7 +58,7 @@ class CurrencyControllerTest {
                 .thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/" + TEST_UE)
+                        .get("/currency/" + TEST_UE)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
     }

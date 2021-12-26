@@ -10,6 +10,7 @@ import ru.semykin.alfa_test.client.GiphyClient;
 import ru.semykin.alfa_test.dto.GiphyDataDto;
 import ru.semykin.alfa_test.dto.GiphyDto;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static ru.semykin.alfa_test.util.ApplicationConstants.*;
@@ -17,29 +18,30 @@ import static ru.semykin.alfa_test.util.ApplicationConstants.*;
 @SpringBootTest
 class GiphyServiceTest {
 
-    @Autowired
-    FeignClientService feignClientService;
-
     @MockBean
-    GiphyClient giphyClient;
+    private GiphyClient giphyClient;
 
     @Autowired
-    SettingsService settings;
+    private SettingsService settings;
 
     @Autowired
-    GiphyService giphyService;
+    private GiphyService giphyService;
 
-    GiphyDto richGiphy = new GiphyDto();
-    GiphyDto brokeGiphy = new GiphyDto();
-    GiphyDataDto richData = new GiphyDataDto();
-    GiphyDataDto brokeData = new GiphyDataDto();
+    private GiphyDto richGiphy = new GiphyDto();
+    private GiphyDto brokeGiphy = new GiphyDto();
+    private final GiphyDto blankGiphy = new GiphyDto();
+    private GiphyDataDto richData = new GiphyDataDto();
+    private GiphyDataDto brokeData = new GiphyDataDto();
+    private final GiphyDataDto blank = new GiphyDataDto();
 
     @BeforeEach
     public void startUP() {
         richData.setEmbedUrl("rich_url");
         brokeData.setEmbedUrl("broke_url");
+        blank.setEmbedUrl("");
         richGiphy.setData(richData);
         brokeGiphy.setData(brokeData);
+        blankGiphy.setData(blank);
     }
 
     @AfterEach
@@ -66,5 +68,25 @@ class GiphyServiceTest {
                         RATING))
                 .thenReturn(brokeGiphy);
         assertTrue(giphyService.getGifUrl(false).contains("broke_url"));
+    }
+
+    @Test
+    void whenReturnIsBlankUrlThenIllegalArgumentException() {
+        when(giphyClient
+                .getGif(settings.getGiphyApiKey(),
+                        BROKE_TAG,
+                        RATING))
+                .thenReturn(blankGiphy);
+        assertThrows(IllegalArgumentException.class, () -> giphyService.getGifUrl(false));
+    }
+
+    @Test
+    void whenReturnNullableGiphyDataDtoThenIllegalArgumentException() {
+        when(giphyClient
+                .getGif(settings.getGiphyApiKey(),
+                        BROKE_TAG,
+                        RATING))
+                .thenReturn(null);
+        assertThrows(IllegalArgumentException.class, () -> giphyService.getGifUrl(false));
     }
 }

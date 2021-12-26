@@ -1,7 +1,5 @@
 package ru.semykin.alfa_test.service;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 import ru.semykin.alfa_test.client.CurrencyClient;
 import ru.semykin.alfa_test.client.GiphyClient;
@@ -11,8 +9,6 @@ import ru.semykin.alfa_test.dto.GiphyDto;
 import static ru.semykin.alfa_test.util.ApplicationConstants.*;
 
 @Service
-@Getter
-@Setter
 public class FeignClientService {
 
     private final CurrencyClient currencyClient;

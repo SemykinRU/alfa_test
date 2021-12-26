@@ -14,7 +14,7 @@ import ru.semykin.alfa_test.dto.GiphyDto;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static ru.semykin.alfa_test.util.ApplicationConstants.*;
 
@@ -22,21 +22,21 @@ import static ru.semykin.alfa_test.util.ApplicationConstants.*;
 class GetUrlFromGiphyServiceTest {
 
     @Autowired
-    GetUrlFromGiphyService getUrlFromGiphyService;
+    private GetUrlFromGiphyService getUrlFromGiphyService;
 
     @MockBean
-    CurrencyClient currencyClient;
+    private CurrencyClient currencyClient;
 
     @MockBean
-    GiphyClient giphyClient;
+    private GiphyClient giphyClient;
 
     @Autowired
-    SettingsService settings;
+    private SettingsService settings;
 
-    GiphyDto giphyDto;
-    GiphyDataDto giphyDataDto;
-    CurrencyDto todayCurrencyDto;
-    CurrencyDto yesterdayCurrencyDto;
+    private GiphyDto giphyDto;
+    private GiphyDataDto giphyDataDto;
+    private CurrencyDto todayCurrencyDto;
+    private CurrencyDto yesterdayCurrencyDto;
 
     @BeforeEach
     public void setUP() {
