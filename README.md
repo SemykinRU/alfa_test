@@ -1,5 +1,12 @@
 # alfa_test
-[![Build Status](https://app.travis-ci.com/SemykinRU/alfa_test.svg?branch=main)](https://app.travis-ci.com/SemykinRU/alfa_test)
-[![codecov](https://codecov.io/gh/SemykinRU/alfa_test/branch/main/graph/badge.svg?token=9SV0R2SUCW)](https://codecov.io/gh/SemykinRU/alfa_test)
 
-Cервис, который обращается к сервису курсов валют, и отображает определенную gif.
+Для запуска приложения в docker на Linux необходимо:
+1. Перейти в терминале в корень приложения
+2. gradle clean build  
+3. docker build -t currency_app:1.0 .   точка в конце команды обязательна
+4. docker run --name currency_app -d -p $PORT:8080 -t currency_app:1.0
+5. После запуска контейнера в браузере набираем localhost:$PORT/currency/{symbols}
+
+$PORT - порт на котором мы разворачиваем наше приложение.
+{symbols} - трех значный код валюты. 
+Пример localhost:8080/currency/RUB
