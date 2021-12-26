@@ -4,7 +4,7 @@ plugins {
     id 'java'
 }
 
-group = 'ru.semykin'
+group = 'ru.semykin.alfa_test'
 version = '0.1.0'
 sourceCompatibility = '11'
 apply plugin: 'jacoco'

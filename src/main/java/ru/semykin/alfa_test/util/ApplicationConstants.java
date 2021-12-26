@@ -22,4 +22,12 @@ public interface ApplicationConstants {
 
     String TEST_UE = "RUB";
 
+    String FAILED_GET_CURRENCY_DATA = "Не пришли данные по валюте %s за %s";
+
+    String FAILED_GET_GIF = "Не удалось получить gif по тагу %s";
+
+    String FAILED_GET_URL_GIF = "Не удалось получить ссылку на gif";
+
+    String GIF_URL = "<iframe src='%s'></iframe>";
+
 }

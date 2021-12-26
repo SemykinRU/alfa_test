@@ -1,0 +1,10 @@
+#Настройка для работы с сервисом курсов валют.
+currency:
+  url: https://openexchangerates.org/api/
+  app_id: 64c2e5b33da64ef9968d3fc497bee65b
+  base_currency: USD
+
+#Настройка для работы с сервисом gif изображений.
+giphy:
+  url: https://api.giphy.com/v1/gifs/
+  api_key: z8Wj9E5cYWJAvK4KfHaNkbd5SAw063us

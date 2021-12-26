@@ -10,13 +10,13 @@ public class GetUrlFromGiphyService {
 
     private final GiphyService giphyService;
 
-    public GetUrlFromGiphyService(CurrencyService currencyService, GiphyService giphyService) {
+    public GetUrlFromGiphyService(final CurrencyService currencyService, final GiphyService giphyService) {
         this.currencyService = currencyService;
         this.giphyService = giphyService;
     }
 
-    public ResponseEntity<String> responseFromGiphy(String symbol) {
-        boolean isTrue = currencyService.isIncreased(symbol);
+    public ResponseEntity<String> responseFromGiphy(final String symbol) {
+        final boolean isTrue = currencyService.isIncreased(symbol);
         return ResponseEntity.ok(giphyService.getGifUrl(isTrue));
     }
 }
