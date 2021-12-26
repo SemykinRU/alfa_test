@@ -18,7 +18,7 @@ public interface ApplicationConstants {
 
     String BROKE_TAG = "#broke";
 
-    String RATING = "pg-13";
+    String RATING = "pg";
 
     String TEST_UE = "RUB";
 
